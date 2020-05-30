@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.CodeDom;
+
 
 namespace FitStrategies
 {
@@ -166,7 +163,7 @@ namespace FitStrategies
         }
         public void printFInalList()
         {
-            Console.WriteLine("the recrod after doing the fit algorithm: ");
+            Console.Write("the recrod after doing the fit algorithm: ");
             for (int i = 0; i < ls.Count; i++)
             {
                 Console.Write(ls[i].name);
