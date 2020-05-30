@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.CodeDom;
+
 namespace FitStrategies
 {
     class record
@@ -14,6 +16,7 @@ namespace FitStrategies
         public record(string name)
         {
             this.name = name;
+
         }
 
     }
@@ -26,12 +29,13 @@ namespace FitStrategies
     }
     class fitAlgorithms
     {
+        public int fragmentationSize = 0;
 
     }
-    class firstfit : ifitAlgorithms //list
+    class firstfit : fitAlgorithms, ifitAlgorithms //list
     {
         public List<record> availList;
-        public int fragmentationSize = 0;
+
         public firstfit()
         {
             availList = new List<record>();
@@ -94,14 +98,10 @@ namespace FitStrategies
                     deleteRecordFromList(r);
                 }
 
-                for (int i = 0; i < ls.Count; i++)
-                {
-                    Console.WriteLine(ls[i].name);
-                }
+
             }
 
-            firstfit a = (firstfit)algo;
-            Console.WriteLine(a.fragmentationSize);
+            sr.Close();
 
         }
 
@@ -158,7 +158,23 @@ namespace FitStrategies
             }
 
         }
+        public int getfragm()
+        {
+            fitAlgorithms m = (fitAlgorithms)algo;
+            return m.fragmentationSize;
 
+        }
+        public void printFInalList()
+        {
+            Console.WriteLine("the recrod after doing the fit algorithm: ");
+            for (int i = 0; i < ls.Count; i++)
+            {
+                Console.Write(ls[i].name);
+                Console.Write(" ");
+
+            }
+            Console.WriteLine();
+        }
 
     }
 
@@ -166,7 +182,6 @@ namespace FitStrategies
     {
         static void Main(string[] args)
         {
-
             Console.WriteLine("ther are 5 files in this project each one of them have test cases");
             Console.WriteLine("1- testcase1 (dr hashem testcases)");
             Console.WriteLine("2- testcase2 ");
@@ -174,22 +189,44 @@ namespace FitStrategies
             Console.WriteLine("4- testcase4 ");
             Console.WriteLine("5- testcase5 ");
 
+            while (true)
+            {
 
-            Console.WriteLine("enter the number (1 or 2 or 3 or 4 or 5) to  choose the file with testcases");
-            char d = (char)Console.Read();
+                Console.WriteLine("enter the number (1 or 2 or 3 or 4 or 5) to  choose the file with testcases");
 
-            string file = "testcase" + d + ".txt";
-            FileStream fs = new FileStream(file, FileMode.Open);
-
-
-            Console.WriteLine("choose the fit strategy algorithm");
-            Console.WriteLine("1- firstfit");
-            Console.WriteLine("2- bestfit");
-            Console.WriteLine("enter the number (1 or 2 ) to choose the fit algorithm ");
+                char d = Console.ReadLine()[0];
+                string file = "testcase" + d + ".txt";
+                FileStream fs = new FileStream(file, FileMode.Open);
 
 
-            readrecords m = new readrecords(fs, new firstfit());
+                Console.WriteLine("choose the fit strategy algorithm");
+                Console.WriteLine("1- firstfit");
+                Console.WriteLine("2- bestfit");
+                Console.WriteLine("enter the number (1 or 2 ) to choose the fit algorithm ");
+                d = Console.ReadLine()[0];
+                if (d > '2')
+                {
+                    while (d > '2')
+                    {
+                        d = (char)Console.Read();
+                        Console.WriteLine("please enter number 1 or number 2");
+                    }
+                }
 
+                if (d == '1')
+                {
+                    readrecords r = new readrecords(fs, new firstfit());
+                    Console.WriteLine("first fit fragmantation is : "+ r.getfragm());
+                    r.printFInalList();
+                }
+                 if (d == '2')
+                {
+                    readrecords r = new readrecords(fs, new firstfit());
+                    Console.WriteLine(r.getfragm());
+                    r.printFInalList();
+                }
+                fs.Close();
+            }
         }
     }
 }
