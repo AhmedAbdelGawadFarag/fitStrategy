@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Net.Cache;
-using System.Net.Security;
+
 
 namespace FitStrategies
 {
@@ -232,8 +229,14 @@ namespace FitStrategies
     {
         static bool checkstring(string s)
         {
-            return (s.All(char.IsDigit) && (s.Length == 1));
+            foreach(var d in s)
+            {
+                if (!char.IsDigit(d))
+                    return false;
+            }
 
+            return ((s.Length == 1) );
+            
         }
         static char strtochar(string s)
         {
@@ -257,7 +260,7 @@ namespace FitStrategies
                 string filename = Console.ReadLine();
                
 
-                if (!checkstring(filename)) continue;
+                if (!checkstring(filename) || (filename[0]>'5'||filename[0]<'1')) continue;
 
                
                 string file = "testcase" + strtochar(filename) + ".txt";
@@ -270,7 +273,7 @@ namespace FitStrategies
                 Console.WriteLine("enter the number (1 or 2 ) to choose the fit algorithm ");
                 string fitalgo = Console.ReadLine();
 
-                while (!checkstring(fitalgo))
+                while (!checkstring(fitalgo) || fitalgo[0] <'1'|| fitalgo[0] > '2' )
                 {
                     Console.WriteLine(" you can enter the number (1 or 2 ) ");
                     fitalgo = Console.ReadLine();
@@ -280,16 +283,24 @@ namespace FitStrategies
 
                 if (strtochar(fitalgo) == '1')
                 {
+                    Console.WriteLine();
+                    Console.WriteLine();
                     readrecords r = new readrecords(fs, new firstfit());
                     Console.WriteLine("first fit fragmantation is : " + r.getfragm());
                     r.printFInalList();
                 }
                 if (strtochar(fitalgo) == '2')
                 {
+                    Console.WriteLine();
+                    Console.WriteLine();
                     readrecords r = new readrecords(fs, new bestfit());
-                    Console.WriteLine(r.getfragm());
+                    Console.WriteLine("best fit fragmantation is : " + r.getfragm());
                     r.printFInalList();
                 }
+                Console.WriteLine();
+                Console.WriteLine();
+
+
                 fs.Close();
             }
         }
