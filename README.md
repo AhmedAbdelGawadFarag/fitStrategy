@@ -1,2 +1,1 @@
-# fitStrategy  using bestfit , first fit algorithm
-best 
+# fitStrategy  using best fit  , first fit algorithms

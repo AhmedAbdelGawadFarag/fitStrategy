@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
-
+using System.Net.Cache;
+using System.Net.Security;
 
 namespace FitStrategies
 {
@@ -14,6 +16,15 @@ namespace FitStrategies
         {
             this.name = name;
 
+        }
+
+    }
+    class comparebysize : IComparer<record>
+    {
+        public int Compare(record left, record right)
+        {
+
+            return Math.Sign(left.size - right.size);
         }
 
     }
@@ -65,6 +76,45 @@ namespace FitStrategies
             fragmentationSize += r.size;
             availList.Add(r);
         }
+
+    }
+    class bestfit :  fitAlgorithms , ifitAlgorithms
+    {
+        SortedSet<record> availList;
+        public bestfit()
+        {
+            availList = new SortedSet<record>(new comparebysize()); 
+
+        }
+        public bool reclaimSpace(record r, List<record> ls)
+        {
+            foreach( var availRecord in availList)
+            {
+                if (r.size <= availRecord.size)
+                {
+                    for (int j = 0; j < ls.Count; j++)
+                    {
+                        if (availRecord.name == ls[j].name)//remove from the list
+                        {
+                            ls[j] = r;
+                            break;
+                        }
+                    }
+                    availList.Remove(availRecord);
+                    fragmentationSize -= r.size;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void addtoavail_list(record r)
+        {
+            fragmentationSize += r.size;
+            availList.Add(r);
+        }
+
 
     }
     class readrecords
@@ -217,7 +267,7 @@ namespace FitStrategies
                 }
                 if (d == '2')
                 {
-                    readrecords r = new readrecords(fs, new firstfit());
+                    readrecords r = new readrecords(fs, new bestfit());
                     Console.WriteLine(r.getfragm());
                     r.printFInalList();
                 }
