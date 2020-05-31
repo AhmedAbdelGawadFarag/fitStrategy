@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Net.Cache;
 using System.Net.Security;
 
@@ -78,17 +79,17 @@ namespace FitStrategies
         }
 
     }
-    class bestfit :  fitAlgorithms , ifitAlgorithms
+    class bestfit : fitAlgorithms, ifitAlgorithms
     {
         SortedSet<record> availList;
         public bestfit()
         {
-            availList = new SortedSet<record>(new comparebysize()); 
+            availList = new SortedSet<record>(new comparebysize());
 
         }
         public bool reclaimSpace(record r, List<record> ls)
         {
-            foreach( var availRecord in availList)
+            foreach (var availRecord in availList)
             {
                 if (r.size <= availRecord.size)
                 {
@@ -130,7 +131,9 @@ namespace FitStrategies
             while (sr.Peek() != -1)
             {
                 string line = sr.ReadLine();
+                if (line == "") continue;
                 record r = Get_recordFromFile(line);
+
                 if (line[0] == 'A' || line[0] == 'a')
                 {
                     if (!algo.reclaimSpace(r, ls))
@@ -227,6 +230,16 @@ namespace FitStrategies
 
     class Program
     {
+        static bool checkstring(string s)
+        {
+            return (s.All(char.IsDigit) && (s.Length == 1));
+
+        }
+        static char strtochar(string s)
+        {
+            return s[0];
+
+        }
         static void Main(string[] args)
         {
             Console.WriteLine("ther are 5 files in this project each one of them have test cases");
@@ -241,8 +254,13 @@ namespace FitStrategies
 
                 Console.WriteLine("enter the number (1 or 2 or 3 or 4 or 5) to  choose the file with testcases");
 
-                char d = Console.ReadLine()[0];
-                string file = "testcase" + d + ".txt";
+                string filename = Console.ReadLine();
+               
+
+                if (!checkstring(filename)) continue;
+
+               
+                string file = "testcase" + strtochar(filename) + ".txt";
                 FileStream fs = new FileStream(file, FileMode.Open);
 
 
@@ -250,22 +268,23 @@ namespace FitStrategies
                 Console.WriteLine("1- firstfit");
                 Console.WriteLine("2- bestfit");
                 Console.WriteLine("enter the number (1 or 2 ) to choose the fit algorithm ");
-                d = Console.ReadLine()[0];
-               
-                    while (d > '2')
-                    {
-                        Console.WriteLine("please enter number 1 or number 2");
-                        d = (char)Console.ReadLine()[0];
-                    }
-                
+                string fitalgo = Console.ReadLine();
 
-                if (d == '1')
+                while (!checkstring(fitalgo))
+                {
+                    Console.WriteLine(" you can enter the number (1 or 2 ) ");
+                    fitalgo = Console.ReadLine();
+
+                }
+
+
+                if (strtochar(fitalgo) == '1')
                 {
                     readrecords r = new readrecords(fs, new firstfit());
                     Console.WriteLine("first fit fragmantation is : " + r.getfragm());
                     r.printFInalList();
                 }
-                if (d == '2')
+                if (strtochar(fitalgo) == '2')
                 {
                     readrecords r = new readrecords(fs, new bestfit());
                     Console.WriteLine(r.getfragm());
