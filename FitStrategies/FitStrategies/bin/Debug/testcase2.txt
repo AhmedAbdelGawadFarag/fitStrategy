@@ -1,0 +1,5 @@
+Add, A, 20 
+Add, B,  40 
+Delete, B 
+Add, G, 15 
+Add, c,30

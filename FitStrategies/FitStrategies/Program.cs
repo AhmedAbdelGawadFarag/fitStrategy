@@ -201,22 +201,21 @@ namespace FitStrategies
                 Console.WriteLine("2- bestfit");
                 Console.WriteLine("enter the number (1 or 2 ) to choose the fit algorithm ");
                 d = Console.ReadLine()[0];
-                if (d > '2')
-                {
+               
                     while (d > '2')
                     {
-                        d = (char)Console.Read();
                         Console.WriteLine("please enter number 1 or number 2");
+                        d = (char)Console.ReadLine()[0];
                     }
-                }
+                
 
                 if (d == '1')
                 {
                     readrecords r = new readrecords(fs, new firstfit());
-                    Console.WriteLine("first fit fragmantation is : "+ r.getfragm());
+                    Console.WriteLine("first fit fragmantation is : " + r.getfragm());
                     r.printFInalList();
                 }
-                 if (d == '2')
+                if (d == '2')
                 {
                     readrecords r = new readrecords(fs, new firstfit());
                     Console.WriteLine(r.getfragm());
