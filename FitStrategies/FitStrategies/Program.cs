@@ -229,14 +229,14 @@ namespace FitStrategies
     {
         static bool checkstring(string s)
         {
-            foreach(var d in s)
+            foreach (var d in s)
             {
                 if (!char.IsDigit(d))
                     return false;
             }
 
-            return ((s.Length == 1) );
-            
+            return ((s.Length == 1));
+
         }
         static char strtochar(string s)
         {
@@ -258,45 +258,27 @@ namespace FitStrategies
                 Console.WriteLine("enter the number (1 or 2 or 3 or 4 or 5) to  choose the file with testcases");
 
                 string filename = Console.ReadLine();
-               
 
-                if (!checkstring(filename) || (filename[0]>'5'||filename[0]<'1')) continue;
 
-               
+                if (!checkstring(filename) || (filename[0] > '5' || filename[0] < '1')) continue;
+
+
                 string file = "testcase" + strtochar(filename) + ".txt";
                 FileStream fs = new FileStream(file, FileMode.Open);
 
 
-                Console.WriteLine("choose the fit strategy algorithm");
-                Console.WriteLine("1- firstfit");
-                Console.WriteLine("2- bestfit");
-                Console.WriteLine("enter the number (1 or 2 ) to choose the fit algorithm ");
-                string fitalgo = Console.ReadLine();
+                Console.WriteLine();
+                Console.WriteLine();
+                readrecords r = new readrecords(fs, new firstfit());
+                Console.WriteLine("first fit fragmantation is : " + r.getfragm());
+                r.printFInalList();
+                Console.WriteLine("\t");
+                fs.Close();
+                fs = new FileStream(file, FileMode.Open);
+                readrecords r2 = new readrecords(fs, new bestfit());
+                Console.WriteLine("best fit fragmantation is : " + r2.getfragm());
+                r2.printFInalList();
 
-                while (!checkstring(fitalgo) || fitalgo[0] <'1'|| fitalgo[0] > '2' )
-                {
-                    Console.WriteLine(" you can enter the number (1 or 2 ) ");
-                    fitalgo = Console.ReadLine();
-
-                }
-
-
-                if (strtochar(fitalgo) == '1')
-                {
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    readrecords r = new readrecords(fs, new firstfit());
-                    Console.WriteLine("first fit fragmantation is : " + r.getfragm());
-                    r.printFInalList();
-                }
-                if (strtochar(fitalgo) == '2')
-                {
-                    Console.WriteLine();
-                    Console.WriteLine();
-                    readrecords r = new readrecords(fs, new bestfit());
-                    Console.WriteLine("best fit fragmantation is : " + r.getfragm());
-                    r.printFInalList();
-                }
                 Console.WriteLine();
                 Console.WriteLine();
 

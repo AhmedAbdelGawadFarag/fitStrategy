@@ -1,8 +1,10 @@
 Add, A, 20 
 Add, B,  40 
-Add, C,  10 
+Add, C,  15
+Delete, A
 Delete, B
 Delete, C
-Add, G, 5
-Add, F, 40
-
+Add, D,  10
+Add, F,  5
+Add, M,  30
+Add, c,  20
