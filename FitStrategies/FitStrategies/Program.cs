@@ -129,6 +129,7 @@ namespace FitStrategies
             {
                 string line = sr.ReadLine();
                 if (line == "") continue;
+
                 record r = Get_recordFromFile(line);
 
                 if (line[0] == 'A' || line[0] == 'a')
@@ -187,8 +188,10 @@ namespace FitStrategies
             }
 
             if (size == "") size = "0";
+
             record r = new record(name);
             r.size = int.Parse(size);
+
             return r;
         }
         public void deleteRecordFromList(record r)
@@ -198,8 +201,10 @@ namespace FitStrategies
                 if (r.name.Equals(ls[i].name))
                 {
                     algo.addtoavail_list(ls[i]);
+
                     string s = '*' + ls[i].name;
                     ls[i].name = s;
+
                     break;
                 }
             }
@@ -209,7 +214,6 @@ namespace FitStrategies
         {
             fitAlgorithms m = (fitAlgorithms)algo;
             return m.fragmentationSize;
-
         }
         public void printFInalList()
         {
@@ -218,7 +222,6 @@ namespace FitStrategies
             {
                 Console.Write(ls[i].name);
                 Console.Write(" ");
-
             }
             Console.WriteLine();
         }
@@ -259,23 +262,21 @@ namespace FitStrategies
                 Console.WriteLine("enter the number (1 or 2 or 3 or 4 or 5) to  choose the file with testcases");
 
                 string filename = Console.ReadLine();
-
-
                 if (!checkstring(filename) || (filename[0] > '5' || filename[0] < '1')) continue;
-
 
                 string file = "testcase" + strtochar(filename) + ".txt";
                 FileStream fs = new FileStream(file, FileMode.Open);
 
-
                 Console.WriteLine();
                 Console.WriteLine();
                 readrecords r = new readrecords(fs, new firstfit());
+
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("first fit fragmantation is : " + r.getfragm());
                 r.printFInalList();
                 Console.WriteLine("\t");
                 fs.Close();
+
                 fs = new FileStream(file, FileMode.Open);
                 readrecords r2 = new readrecords(fs, new bestfit());
                 Console.WriteLine("best fit fragmantation is : " + r2.getfragm());
