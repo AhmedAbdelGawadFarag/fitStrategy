@@ -255,6 +255,7 @@ namespace FitStrategies
             while (true)
             {
 
+                Console.ResetColor();
                 Console.WriteLine("enter the number (1 or 2 or 3 or 4 or 5) to  choose the file with testcases");
 
                 string filename = Console.ReadLine();
@@ -270,6 +271,7 @@ namespace FitStrategies
                 Console.WriteLine();
                 Console.WriteLine();
                 readrecords r = new readrecords(fs, new firstfit());
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("first fit fragmantation is : " + r.getfragm());
                 r.printFInalList();
                 Console.WriteLine("\t");
