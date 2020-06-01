@@ -1,0 +1,10 @@
+Add, A, 7 
+Add, B, 5
+Add, C, 30 
+Delete, A 
+Delete, B 
+Delete, C 
+Add, D , 80
+Delete, D 
+Add, E , 100
+Add, F , 30

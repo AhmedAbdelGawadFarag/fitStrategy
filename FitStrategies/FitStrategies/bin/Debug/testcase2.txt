@@ -7,4 +7,4 @@ Delete, C
 Add, D,  10
 Add, F,  5
 Add, M,  30
-Add, c,  20
+Add, C,  20
